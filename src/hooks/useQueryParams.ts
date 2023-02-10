@@ -1,4 +1,4 @@
-import {FC, useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import {useRouter} from "next/router";
 
 
@@ -15,9 +15,9 @@ export const useQueryParams = <T>({qpName, qpValues, qpDefaultValue}: UseQueryPa
 
     useEffect(() =>{
         if(router.isReady){
-            if(router.query?.[qpName] && typeof router?.query?.[qpName] === 'string' && qpValues.includes(router.query?.[qpName] as T)) {
+            if(router?.query?.[qpName] && typeof router?.query?.[qpName] === 'string' && qpValues.includes(router?.query?.[qpName] as T)) {
                 console.log("query", router.query)
-                setQpValue(router?.query.tab as T)
+                setQpValue(router.query?.[qpName] as T)
             } else {
                 console.log("loads by default")
                 setQpValue(qpDefaultValue)
@@ -29,9 +29,9 @@ export const useQueryParams = <T>({qpName, qpValues, qpDefaultValue}: UseQueryPa
         if(qpValue) {
             console.log("yes", qpValue)
             if(isUserFriendlyUrl){
-                router.push(`${router.pathname}?tab=${qpValue}`, `${router.pathname}/${qpValue}`)
+                router.push(`${router.pathname}?${qpName}=${qpValue}`, `${router.pathname}/${qpValue}`)
             }else {
-                router.push(`${router.pathname}?tab=${qpValue}`)
+                router.push(`${router.pathname}?${qpName}=${qpValue}`)
             }
 
         } else console.log("non", qpValue)

@@ -4,8 +4,8 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: '/shipper/:tab',
-        destination: '/shipper?tab=:tab',
+        source: '/shipper/:tab/:panel',
+        destination: '/shipper?tab=:tab&panel=:panel',
       },
     ]
   },
